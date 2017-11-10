@@ -9,10 +9,13 @@ import android.widget.TextView;
 
 import com.carapp.gobi.carapp.domain.Car;
 
+import org.w3c.dom.Text;
+
 public class DetailsActivity extends AppCompatActivity {
 
 
     private Car car;
+    private TextView description;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +25,7 @@ public class DetailsActivity extends AppCompatActivity {
         Intent i = getIntent();
 
         this.car = (Car)i.getSerializableExtra("car");
-        TextView description = findViewById(R.id.carDescription);
+        this.description = findViewById(R.id.carDescription);
 
         description.setText(car.getModelYear() + " " + car.getMake() + " " + car.getModel());
 
@@ -50,9 +53,13 @@ public class DetailsActivity extends AppCompatActivity {
 
                 // get String data from Intent
                 car = (Car) data.getSerializableExtra("result");
-
+                objectChanged();
             }
         }
+    }
+
+    private void objectChanged() {
+        description.setText(car.getModelYear() + " " + car.getMake() + " " + car.getModel());
     }
 
     @Override
