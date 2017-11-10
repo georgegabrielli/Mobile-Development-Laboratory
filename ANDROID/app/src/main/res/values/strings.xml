@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Carapp</string>
+    <string name="chassis_code">Chassis Code</string>
+    <string name="model">Model</string>
+    <string name="make">Make</string>
+    <string name="cubic_capaity">Cubic Capacity</string>
+    <string name="model_year">Model Year</string>
 </resources>

@@ -81,4 +81,16 @@ public class Car implements Serializable{
     public void setInsuranceList(List<Insurance> insuranceList) {
         this.insuranceList = insuranceList;
     }
+
+    @Override
+    public String toString() {
+        return "Car{" +
+                "chassisCode='" + chassisCode + '\'' +
+                ", model='" + model + '\'' +
+                ", make='" + make + '\'' +
+                ", cubicCapacity=" + cubicCapacity +
+                ", modelYear=" + modelYear +
+                ", insuranceList=" + insuranceList +
+                '}';
+    }
 }

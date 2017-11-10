@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.carapp.gobi.carapp.EditCar">
+    android:layout_height="match_parent">
 
     <Button
         android:id="@+id/buttonSave"
@@ -13,70 +10,90 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="Save"
-        tools:layout_editor_absoluteX="11dp"
-        tools:layout_editor_absoluteY="447dp" />
+        android:text="Save" />
 
-    <EditText
-        android:id="@+id/editTextCubicCapacity"
-        android:layout_width="267dp"
+    <android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layoutChassisCode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/editTextChassisCode"
+            android:layout_width="269dp"
+            android:layout_height="41dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignStart="@+id/buttonSave"
+            android:layout_marginTop="15dp"
+            android:ems="10"
+            android:hint="@string/chassis_code"
+            android:inputType="text" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/layoutCubicCapacity"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/editTextModel"
-        android:layout_below="@+id/editTextModel"
-        android:contentDescription="Cubic Capacity"
-        android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="158dp" />
+        android:layout_below="@+id/layoutModelYear">
 
-    <EditText
-        android:id="@+id/editTextMake"
-        android:layout_width="269dp"
-        android:layout_height="41dp"
-        android:layout_alignStart="@+id/editTextChassiCode"
-        android:layout_below="@+id/editTextChassiCode"
-        android:contentDescription="Make"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintTop_toBottomOf="@+id/editTextCubicCapacity"
-        tools:layout_editor_absoluteX="4dp" />
+        <EditText
+            android:id="@+id/editTextCubicCapacity"
+            android:layout_width="267dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/cubic_capaity"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
 
-    <EditText
-        android:id="@+id/editTextModelYear"
-        android:layout_width="265dp"
+    <android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editTextCubicCapacity"
-        android:layout_below="@+id/editTextModel"
-        android:layout_marginTop="44dp"
-        android:contentDescription="Model Year"
-        android:ems="10"
-        android:inputType="number"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="222dp" />
+        android:id="@+id/layoutMake"
+        android:layout_below="@+id/layoutChassisCode">
 
-    <EditText
-        android:id="@+id/editTextModel"
-        android:layout_width="269dp"
+
+        <EditText
+            android:id="@+id/editTextMake"
+            android:layout_width="269dp"
+            android:layout_height="41dp"
+            android:ems="10"
+            android:hint="@string/make"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/editTextMake"
-        android:layout_below="@+id/editTextMake"
-        android:contentDescription="Model"
-        android:ems="10"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="102dp" />
+        android:id="@+id/layoutModelYear"
+        android:layout_below="@+id/layoutModel">
 
-    <EditText
-        android:id="@+id/editTextChassiCode"
-        android:layout_width="269dp"
-        android:layout_height="41dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignStart="@+id/buttonSave"
-        android:layout_marginTop="15dp"
-        android:contentDescription="Chassis Code"
-        android:ems="10"
-        android:inputType="text"
-        tools:layout_editor_absoluteX="4dp"
-        tools:layout_editor_absoluteY="4dp" />
+        <EditText
+            android:id="@+id/editTextModelYear"
+            android:layout_width="265dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editTextCubicCapacity"
+            android:layout_below="@+id/editTextModel"
+            android:layout_marginTop="44dp"
+            android:hint="@string/model_year"
+            android:inputType="number" />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutMake"
+        android:id="@+id/layoutModel">
+
+        <EditText
+            android:id="@+id/editTextModel"
+            android:layout_width="269dp"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@+id/editTextMake"
+            android:layout_below="@+id/editTextMake"
+            android:ems="10"
+            android:hint="@string/model"
+            android:inputType="text" />
+    </android.support.design.widget.TextInputLayout>
+
 
 </RelativeLayout>
