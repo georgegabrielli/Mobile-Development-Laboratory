@@ -29,7 +29,8 @@ public class EditCar extends AppCompatActivity {
 
         this.car = (Car) i.getSerializableExtra("car");
         final EditText textChassisCode = findViewById(R.id.editTextChassisCode);
-        textChassisCode.setText(car.getChassisCode(), TextView.BufferType.EDITABLE);
+        textChassisCode.setEnabled(false);
+        textChassisCode.setText(car.getChassisCode());
 
         final EditText textMake = findViewById(R.id.editTextMake);
         textMake.setText(car.getMake(), TextView.BufferType.EDITABLE);
@@ -94,7 +95,6 @@ public class EditCar extends AppCompatActivity {
 
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-            finish();
 
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(EditCar.this,

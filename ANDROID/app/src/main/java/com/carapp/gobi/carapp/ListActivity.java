@@ -12,6 +12,7 @@ import com.carapp.gobi.carapp.utils.CarListAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -58,7 +59,7 @@ public class ListActivity extends AppCompatActivity {
                 Car p = (Car) data.getSerializableExtra("result");
 
                 for(Car pr : cars){
-                    if(pr.getChassisCode()== p.getChassisCode()){
+                    if(Objects.equals(pr.getChassisCode(), p.getChassisCode())){
                        pr.setMake(p.getMake());
                        pr.setModel(p.getModel());
                        pr.setCubicCapacity(p.getCubicCapacity());
@@ -78,17 +79,17 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public void populateList(){
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds1", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds2", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds3", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds4", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds5", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds6", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds7", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds8", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds9", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds10", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds11", "1er", "BEMWEU", 1993, 2011));
+        cars.add(new Car("sdfghjhgfds0", "1er", "BEMWEU", 1993, 2011));
     }
 }

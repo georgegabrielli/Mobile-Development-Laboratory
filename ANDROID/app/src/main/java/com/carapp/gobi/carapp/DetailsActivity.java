@@ -1,5 +1,6 @@
 package com.carapp.gobi.carapp;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -49,11 +50,16 @@ public class DetailsActivity extends AppCompatActivity {
 
         // check that it is the SecondActivity with an OK result
         if (requestCode == 0) {
-            if (resultCode == RESULT_OK) {
+            if (resultCode == Activity.RESULT_OK) {
 
                 // get String data from Intent
                 car = (Car) data.getSerializableExtra("result");
                 objectChanged();
+
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra("result", car);
+                setResult(Activity.RESULT_OK, returnIntent);
+                finish();
             }
         }
     }
