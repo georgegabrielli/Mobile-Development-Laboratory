@@ -7,6 +7,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.carapp.gobi.carapp.appdatabase.AppDatabase;
 import com.carapp.gobi.carapp.domain.Car;
 import com.carapp.gobi.carapp.utils.CarListAdapter;
 
@@ -19,7 +20,7 @@ public class ListActivity extends AppCompatActivity {
     private static final int SECOND_ACTIVITY_RESULT_CODE = 0;
 
     List<Car> cars = new ArrayList<>();
-    private ListView listView;
+
     private CarListAdapter adapter;
 
     @Override
@@ -29,7 +30,7 @@ public class ListActivity extends AppCompatActivity {
 
         populateList();
 
-        listView = (ListView) findViewById(R.id.carList);
+        ListView listView = (ListView) findViewById(R.id.carList);
 
         adapter = new CarListAdapter(cars, getLayoutInflater());
         listView.setAdapter(adapter);
@@ -41,9 +42,7 @@ public class ListActivity extends AppCompatActivity {
                 Intent intent = new Intent(ListActivity.this, DetailsActivity.class);
                 intent.putExtra("car", cars.get(position));
                 startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
-
             }
-
         });
     }
 
@@ -66,8 +65,6 @@ public class ListActivity extends AppCompatActivity {
                        pr.setModelYear(p.getModelYear());
                     }
                 }
-
-
             }
         }
     }
@@ -79,17 +76,34 @@ public class ListActivity extends AppCompatActivity {
     }
 
     public void populateList(){
-        cars.add(new Car("sdfghjhgfds1", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds2", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds3", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds4", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds5", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds6", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds7", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds8", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds9", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds10", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds11", "1er", "BEMWEU", 1993, 2011));
-        cars.add(new Car("sdfghjhgfds0", "1er", "BEMWEU", 1993, 2011));
+        AppDatabase database = AppDatabase.getInstance(getApplicationContext());
+        cars.add(new Car("sdfghjhgfds1", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds2", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds3", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds4", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds5", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds6", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds7", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds8", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds9", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds10", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds11", "1er", "BEMWEU", 1993,
+                2011));
+        cars.add(new Car("sdfghjhgfds0", "1er", "BEMWEU", 1993,
+                2011));
+
+        database.carDao().insertAll(new Car("sdfghjhgfds1", "1er", "BEMWEU", 1993,
+                2011), new Car("sdfghjhgfds2", "1er", "BEMWEU", 1993,
+                2011));
     }
 }

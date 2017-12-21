@@ -1,5 +1,12 @@
 package com.carapp.gobi.carapp.domain;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Relation;
+import android.support.annotation.NonNull;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,28 +14,32 @@ import java.util.List;
 /**
  * Created by gobi on 11/9/2017.
  */
-
+@Entity
 public class Car implements Serializable{
 
+    @PrimaryKey
+    @NonNull
     private String chassisCode;
 
+    @ColumnInfo(name = "model")
     private String model;
 
+    @ColumnInfo(name = "make")
     private String make;
 
+    @ColumnInfo(name = "cubic_capacity")
     private int cubicCapacity;
 
+    @ColumnInfo(name = "model_year")
     private int modelYear;
 
-    private List<Insurance> insuranceList;
-
-    public Car(String chassisCode, String model, String make, int cubicCapacity, int modelYear) {
+    @Ignore
+     public Car(@NonNull String chassisCode, String model, String make, int cubicCapacity, int modelYear) {
         this.chassisCode = chassisCode;
         this.model = model;
         this.make = make;
         this.cubicCapacity = cubicCapacity;
         this.modelYear = modelYear;
-        this.insuranceList = new ArrayList<>();
     }
 
     public Car() {
@@ -74,13 +85,6 @@ public class Car implements Serializable{
         this.modelYear = modelYear;
     }
 
-    public List<Insurance> getInsuranceList() {
-        return insuranceList;
-    }
-
-    public void setInsuranceList(List<Insurance> insuranceList) {
-        this.insuranceList = insuranceList;
-    }
 
     @Override
     public String toString() {
@@ -90,7 +94,6 @@ public class Car implements Serializable{
                 ", make='" + make + '\'' +
                 ", cubicCapacity=" + cubicCapacity +
                 ", modelYear=" + modelYear +
-                ", insuranceList=" + insuranceList +
                 '}';
     }
 }

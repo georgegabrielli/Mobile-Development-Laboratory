@@ -1,25 +1,45 @@
 package com.carapp.gobi.carapp.domain;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.ForeignKey;
+import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.TypeConverter;
+import android.arch.persistence.room.TypeConverters;
+
 import java.util.Date;
 
 /**
  * Created by gobi on 11/9/2017.
  */
 
+@Entity(foreignKeys = @ForeignKey(entity = Car.class,
+        parentColumns = "chassisCode",
+        childColumns = "car_chassis_code"))
 public class Insurance {
 
-    private Car car;
+    @PrimaryKey
+    private int insuranceID;
 
+    @ColumnInfo(name = "start_date")
+    @TypeConverters(value = Converters.class)
     private Date startDate;
 
+    @ColumnInfo(name = "end_date")
+    @TypeConverters(value = Converters.class)
     private Date endDate;
 
+    @ColumnInfo(name = "insurance_company")
     private String insuranceCompany;
 
+    @ColumnInfo(name = "price")
     private float price;
 
-    public Insurance(Car car, Date startDate, Date endDate, String insuranceCompany, float price) {
-        this.car = car;
+    @ColumnInfo(name = "car_chassis_code")
+    private String carChassisCode;
+
+    public Insurance(int insuranceID, Date startDate, Date endDate, String insuranceCompany, float price) {
+        this.insuranceID = insuranceID;
         this.startDate = startDate;
         this.endDate = endDate;
         this.insuranceCompany = insuranceCompany;
@@ -29,12 +49,12 @@ public class Insurance {
     public Insurance() {
     }
 
-    public Car getCar() {
-        return car;
+    public int getInsuranceID() {
+        return insuranceID;
     }
 
-    public void setCar(Car car) {
-        this.car = car;
+    public void setCar(int car) {
+        this.insuranceID = insuranceID;
     }
 
     public Date getStartDate() {
@@ -67,5 +87,31 @@ public class Insurance {
 
     public void setPrice(float price) {
         this.price = price;
+    }
+
+    public String getCarChassisCode() {
+        return carChassisCode;
+    }
+
+    public void setCarChassisCode(String carChassisCode) {
+        this.carChassisCode = carChassisCode;
+    }
+
+    public void setInsuranceID(int insuranceID){
+        this.insuranceID = insuranceID;
+    }
+
+    public static class Converters {
+
+        @TypeConverter
+        public Date fromTimestamp(Long value){
+            return value == null ? null : new Date(value);
+        }
+
+        @TypeConverter
+        public Long dateToTimestamp(Date date){
+            return date == null ? null : date.getTime();
+        }
+
     }
 }

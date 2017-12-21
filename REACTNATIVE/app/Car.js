@@ -1,11 +1,12 @@
-export class Car{
+export class Car {
 
-    constructor(chassisCode, make, model, year, cubicCapacity){
+    constructor(chassisCode, make, model, year, cubicCapacity) {
         this.chassisCode = chassisCode;
         this.make = make;
         this.model = model;
         this.year = year;
         this.cubicCapacity = cubicCapacity;
+        this.isNew = true;
     }
 
 
@@ -47,5 +48,13 @@ export class Car{
 
     setcubicCapacity(value) {
         this.cubicCapacity = value;
+    }
+
+    getisNew() {
+        return this.isNew;
+    }
+
+    setIsNew(value) {
+        this.isNew = value;
     }
 }

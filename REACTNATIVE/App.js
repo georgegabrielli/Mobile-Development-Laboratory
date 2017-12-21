@@ -3,7 +3,6 @@
  * https://github.com/facebook/react-native
  * @flow
  */
-
 import React from 'react';
 import StackNavigator from "react-navigation/lib-rn/navigators/StackNavigator";
 import CarList from "./app/CarList";
@@ -14,13 +13,15 @@ const MyNavigator = StackNavigator({
     Home:
         {
             screen : CarList,
-            navigationOptions : {headerTitle: "Your cars"}
+            navigationOptions : {headerTitle: "Your cars",
+            // headerRight:<Button title = "+"/>
+                }
         },
 
         EditCar:
             {
                 screen : CarEdit,
-                navigationOptions:{headerTitle: "Edit car"}
+                navigationOptions:{headerTitle: "Add/Edit car"}
             }
 });
 
@@ -31,5 +32,8 @@ export default class App extends React.Component{
             <MyNavigator/>
         );
     }
+
+
+
 }
 

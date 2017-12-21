@@ -14,8 +14,8 @@ import org.w3c.dom.Text;
 
 public class DetailsActivity extends AppCompatActivity {
 
-
     private Car car;
+
     private TextView description;
 
     @Override
@@ -30,7 +30,6 @@ public class DetailsActivity extends AppCompatActivity {
 
         description.setText(car.getModelYear() + " " + car.getMake() + " " + car.getModel());
 
-
         ((Button)findViewById(R.id.editButton)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -38,10 +37,7 @@ public class DetailsActivity extends AppCompatActivity {
                 intent.putExtra("car", car);
                 startActivityForResult(intent, 0);
             }
-        }
-
-    );
-
+        });
     }
 
     @Override
@@ -49,9 +45,8 @@ public class DetailsActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         // check that it is the SecondActivity with an OK result
-        if (requestCode == 0) {
-            if (resultCode == Activity.RESULT_OK) {
-
+        if (requestCode == 0){
+            if (resultCode == Activity.RESULT_OK){
                 // get String data from Intent
                 car = (Car) data.getSerializableExtra("result");
                 objectChanged();

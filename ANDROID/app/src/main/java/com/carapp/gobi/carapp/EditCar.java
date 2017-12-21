@@ -1,10 +1,7 @@
 package com.carapp.gobi.carapp;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -69,7 +66,6 @@ public class EditCar extends AppCompatActivity {
                 returnIntent.putExtra("result", car);
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
-
             }
         });
     }
@@ -81,13 +77,10 @@ public class EditCar extends AppCompatActivity {
         s+="\n\n was updated to:  \n\n";
         s+=car.toString();
 
-
-
         String[] TO = {"gabrielli.george@gmail.com"};
         Intent emailIntent = new Intent(Intent.ACTION_SEND);
         emailIntent.setData(Uri.parse("mailto:"));
         emailIntent.setType("text/plain");
-
 
         emailIntent.putExtra(Intent.EXTRA_EMAIL, TO);
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, "Your car was updated!");
@@ -95,13 +88,9 @@ public class EditCar extends AppCompatActivity {
 
         try {
             startActivity(Intent.createChooser(emailIntent, "Send mail..."));
-
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(EditCar.this,
                     "There is no email client installed.", Toast.LENGTH_SHORT).show();
         }
-
-
-
     }
 }
