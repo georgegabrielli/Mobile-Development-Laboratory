@@ -1,6 +1,9 @@
 package com.carapp.gobi.carapp;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +17,7 @@ import com.carapp.gobi.carapp.utils.CarListAdapter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.ExecutionException;
 
 public class ListActivity extends AppCompatActivity {
 
@@ -23,24 +27,78 @@ public class ListActivity extends AppCompatActivity {
 
     private CarListAdapter adapter;
 
+    private ListView listView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
 
-        populateList();
 
-        ListView listView = (ListView) findViewById(R.id.carList);
+        listView = findViewById(R.id.carList);
 
         adapter = new CarListAdapter(cars, getLayoutInflater());
         listView.setAdapter(adapter);
 
+        populateList();
+
+        addListeners(listView);
+    }
+
+    private void addListeners(ListView listView) {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position,
                                     long id) {
                 Intent intent = new Intent(ListActivity.this, DetailsActivity.class);
                 intent.putExtra("car", cars.get(position));
+                startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
+            }
+        });
+
+        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+
+                                                @Override
+                                                public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                                    AlertDialog.Builder builder = new AlertDialog.Builder(ListActivity.this);
+
+                                                    builder.setMessage("??????").setTitle("YOU SURE YOU WANT DELETE?");
+
+                                                    final Car car = cars.get(i);
+
+                                                    builder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            AppDatabase.removeCar(car, getApplicationContext());
+                                                            populateList();
+                                                            dialogInterface.dismiss();
+                                                        }
+                                                    });
+
+
+                                                    builder.setNegativeButton("NONONO", new DialogInterface.OnClickListener() {
+                                                        @Override
+                                                        public void onClick(DialogInterface dialogInterface, int i) {
+                                                            dialogInterface.dismiss();
+                                                        }
+                                                    });
+
+                                                    builder.create().show();
+
+                                                    return true;
+                                                }
+                                            }
+        );
+
+        FloatingActionButton addButton = findViewById(R.id.addButton);
+
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListActivity.this, EditCar.class);
+                Car car = new Car();
+                car.setNew(true);
+                intent.putExtra("car", car);
                 startActivityForResult(intent, SECOND_ACTIVITY_RESULT_CODE);
             }
         });
@@ -53,18 +111,8 @@ public class ListActivity extends AppCompatActivity {
         // check that it is the SecondActivity with an OK result
         if (requestCode == SECOND_ACTIVITY_RESULT_CODE) {
             if (resultCode == RESULT_OK) {
-
+                populateList();
                 // get String data from Intent
-                Car p = (Car) data.getSerializableExtra("result");
-
-                for(Car pr : cars){
-                    if(Objects.equals(pr.getChassisCode(), p.getChassisCode())){
-                       pr.setMake(p.getMake());
-                       pr.setModel(p.getModel());
-                       pr.setCubicCapacity(p.getCubicCapacity());
-                       pr.setModelYear(p.getModelYear());
-                    }
-                }
             }
         }
     }
@@ -75,35 +123,15 @@ public class ListActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public void populateList(){
-        AppDatabase database = AppDatabase.getInstance(getApplicationContext());
-        cars.add(new Car("sdfghjhgfds1", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds2", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds3", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds4", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds5", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds6", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds7", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds8", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds9", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds10", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds11", "1er", "BEMWEU", 1993,
-                2011));
-        cars.add(new Car("sdfghjhgfds0", "1er", "BEMWEU", 1993,
-                2011));
-
-        database.carDao().insertAll(new Car("sdfghjhgfds1", "1er", "BEMWEU", 1993,
-                2011), new Car("sdfghjhgfds2", "1er", "BEMWEU", 1993,
-                2011));
+    public void populateList() {
+        try {
+            cars.clear();
+            cars.addAll(AppDatabase.getAll(getApplicationContext()));
+            adapter.notifyDataSetChanged();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }

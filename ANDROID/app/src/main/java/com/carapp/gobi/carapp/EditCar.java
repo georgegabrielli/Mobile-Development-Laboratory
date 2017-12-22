@@ -6,16 +6,23 @@ import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.carapp.gobi.carapp.appdatabase.AppDatabase;
 import com.carapp.gobi.carapp.domain.Car;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EditCar extends AppCompatActivity {
 
     private Car car;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,11 +33,16 @@ public class EditCar extends AppCompatActivity {
 
         this.car = (Car) i.getSerializableExtra("car");
         final EditText textChassisCode = findViewById(R.id.editTextChassisCode);
-        textChassisCode.setEnabled(false);
+        textChassisCode.setEnabled(car.isNew());
         textChassisCode.setText(car.getChassisCode());
 
-        final EditText textMake = findViewById(R.id.editTextMake);
-        textMake.setText(car.getMake(), TextView.BufferType.EDITABLE);
+        final Spinner textMake = findViewById(R.id.editTextMake);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.brands_array, R.layout.support_simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        textMake.setAdapter(adapter);
+
+        textMake.setSelection(adapter.getPosition(car.getMake()));
 
         final EditText textModel = findViewById(R.id.editTextModel);
         textModel.setText(car.getModel(), TextView.BufferType.EDITABLE);
@@ -50,8 +62,8 @@ public class EditCar extends AppCompatActivity {
                 if (!textCubicCapacity.getText().toString().equals("")) {
                     car.setCubicCapacity(Integer.parseInt(textCubicCapacity.getText().toString()));
                 }
-                if (!textMake.getText().toString().equals("")) {
-                    car.setMake(textMake.getText().toString());
+                if (!textMake.getSelectedItem().toString().equals("")) {
+                    car.setMake(textMake.getSelectedItem().toString());
                 }
                 if (!textModel.getText().toString().equals("")) {
                     car.setModel(textModel.getText().toString());
@@ -62,12 +74,23 @@ public class EditCar extends AppCompatActivity {
 
                 sendEmail(car);
 
+                performSave(car);
+
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("result", car);
                 setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
         });
+    }
+
+    private void performSave(Car car) {
+        if(car.isNew()){
+            AppDatabase.addCar(car, getApplicationContext());
+        }
+        else{
+            AppDatabase.updateCar(car, getApplicationContext());
+        }
     }
 
 

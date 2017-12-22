@@ -5,4 +5,12 @@
     <string name="make">Make</string>
     <string name="cubic_capaity">Cubic Capacity</string>
     <string name="model_year">Model Year</string>
+    <string-array name="brands_array">
+        <item>BMW</item>
+        <item>Dacia</item>
+        <item>Chevrolet</item>
+        <item>Indesit</item>
+        <item>Auchan</item>
+    </string-array>
+
 </resources>

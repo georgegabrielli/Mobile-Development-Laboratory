@@ -52,7 +52,7 @@
         android:layout_below="@+id/layoutChassisCode">
 
 
-        <EditText
+        <Spinner
             android:id="@+id/editTextMake"
             android:layout_width="269dp"
             android:layout_height="41dp"

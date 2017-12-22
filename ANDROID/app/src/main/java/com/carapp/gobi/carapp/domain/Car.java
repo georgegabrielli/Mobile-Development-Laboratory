@@ -34,12 +34,16 @@ public class Car implements Serializable{
     private int modelYear;
 
     @Ignore
+    private volatile boolean isNew;
+
+    @Ignore
      public Car(@NonNull String chassisCode, String model, String make, int cubicCapacity, int modelYear) {
         this.chassisCode = chassisCode;
         this.model = model;
         this.make = make;
         this.cubicCapacity = cubicCapacity;
         this.modelYear = modelYear;
+        this.isNew = false;
     }
 
     public Car() {
@@ -95,5 +99,13 @@ public class Car implements Serializable{
                 ", cubicCapacity=" + cubicCapacity +
                 ", modelYear=" + modelYear +
                 '}';
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 }
