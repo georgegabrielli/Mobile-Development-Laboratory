@@ -62,7 +62,7 @@ export default class CarList extends React.Component {
                                           borderColor: '#d6d7da',
                                       }}
                                       onPress={() => {
-                                          if(firebase.auth().currentUser.email === "gobrielu"){
+                                          if(firebase.auth().currentUser.email === 'georgegabrielli@gmail.com'){
                                           navigate("EditCar", {
                                           item: item,
                                           refresh: this.onRefresh
@@ -71,15 +71,15 @@ export default class CarList extends React.Component {
                                           } }}
 
                                       onLongPress={() => {
-                                          if(firebase.auth().currentUser.email === "gobrielu"){
+                                          if(firebase.auth().currentUser.email === 'georgegabrielli@gmail.com'){
                                           Alert.alert(
                                               'Warning',
                                               'Do you want to delete this car?',
                                               [
                                                   {
                                                       text: 'OK', onPress: () => {
-                                                      AsyncStorage.removeItem(item.getchassisCode())
-                                                          .then(alert("Item was deleted!")).then(this.onRefresh).done();
+                                                        firebase.database().ref('cars').child(item.getId()).remove();
+                                                        this.onRefresh();
 
                                                   }
                                                   },
