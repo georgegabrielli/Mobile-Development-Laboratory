@@ -1,6 +1,6 @@
 import * as React from "react";
 import {AsyncStorage, TextInput, View, StyleSheet, Text, Button, Picker} from "react-native";
-import Communications from 'react-native-communications';
+import firebase from 'firebase/index';
 
 export class CarEdit extends React.Component {
     constructor() {
@@ -32,11 +32,10 @@ export class CarEdit extends React.Component {
                 <Text>Make</Text>
                 <Picker
                     style={{width: "80%", borderWidth: 1, backgroundColor: 'white'}}
-                    selectedValue={this.state.makeSelection}
+                    selectedValue={this.makeSelection}
                     onValueChange={(itemValue) => {
                         console.warn("Value changed: " + itemValue);
-                        this.setState({makeSelection: itemValue});
-                        console.warn(this.state.makeSelection);
+                        this.makeSelection = itemValue;
                     }}>
                     <Picker.Item label="BMW" value="BMW"/>
                     <Picker.Item label="Chevrolet" value="Chevrolet"/>
@@ -68,14 +67,25 @@ export class CarEdit extends React.Component {
                 </TextInput>
 
                 <Button title="Save" onPress={() => {
-                    AsyncStorage.setItem(this.chassisCode,
-                        JSON.stringify({
-                            "chassisCode": this.chassisCode,
-                            "make": this.state.makeSelection,
-                            "model": this.model,
-                            "year": this.year,
-                            "cubicCapacity": this.cubicCapaity
-                        })).done();
+                    if(this.isNew){
+                    let id = firebase.database().ref().child('cars').push().key;
+                    firebase.database().ref('cars').child(id).update({
+                        id: id,
+                       chassisCode: this.chassisCode,
+                        make: this.make,
+                        model: this.model,
+                        cubicCapacity: this.cubicCapacity,
+                        year: this.year
+                    });}else{
+                        firebase.database().ref('cars').child(this.id).update({
+                            id: this.id,
+                            chassisCode: this.chassisCode,
+                            make: this.make,
+                            model: this.model,
+                            cubicCapacity: this.cubicCapacity,
+                            year: this.year
+                        });
+                    }
 
                     // Communications.email(["gabrielli.george@gmail.com", "gabrielli.george@gmail.com"], null, null, "CAR UPDATED", item.getchassisCode());
                     refresh();
@@ -87,12 +97,13 @@ export class CarEdit extends React.Component {
     }
 
     setCarDetails(item) {
+        this.id = item.getID();
         this.model = item.getmodel();
         this.cubicCapacity = item.getcubicCapacity();
         this.year = item.getyear();
         this.chassisCode = item.getchassisCode();
         this.isNew = item.getisNew();
-        this.state = {makeSelection: item.getmake()};
+        this.makeSelection = item.getmake();
     }
 }
 

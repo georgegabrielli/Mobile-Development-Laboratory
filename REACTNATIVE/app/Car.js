@@ -1,6 +1,7 @@
 export class Car {
 
-    constructor(chassisCode, make, model, year, cubicCapacity) {
+    constructor(id, chassisCode, make, model, year, cubicCapacity){
+        this.id = id;
         this.chassisCode = chassisCode;
         this.make = make;
         this.model = model;
@@ -9,6 +10,13 @@ export class Car {
         this.isNew = true;
     }
 
+    getID(){
+        return this.id;
+    }
+
+    setID(id){
+        this.id = id;
+    }
 
     getchassisCode() {
         return this.chassisCode;

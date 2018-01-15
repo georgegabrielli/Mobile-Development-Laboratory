@@ -13,8 +13,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.carapp.gobi.carapp.appdatabase.AppDatabase;
 import com.carapp.gobi.carapp.domain.Car;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +24,14 @@ public class EditCar extends AppCompatActivity {
 
     private Car car;
 
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_car);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("cars");
 
         Intent i = getIntent();
 
@@ -86,10 +90,13 @@ public class EditCar extends AppCompatActivity {
 
     private void performSave(Car car) {
         if(car.isNew()){
-            AppDatabase.addCar(car, getApplicationContext());
+            String rid = databaseReference.push().getKey();
+            car.setId(rid);
+            car.setNew(false);
+            databaseReference.child(car.getId()).setValue(car);
         }
         else{
-            AppDatabase.updateCar(car, getApplicationContext());
+            databaseReference.child(car.getId()).setValue(car);
         }
     }
 

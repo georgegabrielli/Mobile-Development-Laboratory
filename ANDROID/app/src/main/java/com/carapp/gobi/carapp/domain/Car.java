@@ -1,43 +1,29 @@
 package com.carapp.gobi.carapp.domain;
 
-import android.arch.persistence.room.ColumnInfo;
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.Ignore;
-import android.arch.persistence.room.PrimaryKey;
-import android.arch.persistence.room.Relation;
-import android.support.annotation.NonNull;
-
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Created by gobi on 11/9/2017.
  */
-@Entity
-public class Car implements Serializable{
+public class Car implements Serializable {
 
-    @PrimaryKey
-    @NonNull
+    private String id;
+
     private String chassisCode;
 
-    @ColumnInfo(name = "model")
     private String model;
 
-    @ColumnInfo(name = "make")
     private String make;
 
-    @ColumnInfo(name = "cubic_capacity")
     private int cubicCapacity;
 
-    @ColumnInfo(name = "model_year")
     private int modelYear;
 
-    @Ignore
     private volatile boolean isNew;
 
-    @Ignore
-     public Car(@NonNull String chassisCode, String model, String make, int cubicCapacity, int modelYear) {
+    public Car(String id, String chassisCode, String model, String make, int cubicCapacity, int modelYear) {
+        this.id = id;
         this.chassisCode = chassisCode;
         this.model = model;
         this.make = make;
@@ -107,5 +93,13 @@ public class Car implements Serializable{
 
     public void setNew(boolean aNew) {
         isNew = aNew;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

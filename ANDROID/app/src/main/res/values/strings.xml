@@ -12,5 +12,7 @@
         <item>Indesit</item>
         <item>Auchan</item>
     </string-array>
+    <string name="title_activity_login">LoginActivity</string>
+    <string name="action_settings">settings</string>
 
 </resources>
